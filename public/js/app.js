@@ -79274,6 +79274,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'quick-menu',
@@ -79435,33 +79444,78 @@ var render = function() {
           "div",
           { staticClass: "sub-menu", style: _vm.getSubMenu(n - 1) },
           [
-            _c(
-              "a",
-              {
-                style: _vm.subMenuStyle,
-                attrs: { href: _vm.menuUrlList[n - 1], target: _vm.openNewTab },
-                on: {
-                  mouseover: function($event) {
-                    $event.stopPropagation()
-                    return _vm.mouseEnterSubMenu($event)
+            n !== 4
+              ? _c(
+                  "a",
+                  {
+                    style: _vm.subMenuStyle,
+                    attrs: {
+                      href: _vm.menuUrlList[n - 1],
+                      target: _vm.openNewTab
+                    },
+                    on: {
+                      mouseover: function($event) {
+                        $event.stopPropagation()
+                        return _vm.mouseEnterSubMenu($event)
+                      },
+                      mouseout: function($event) {
+                        $event.stopPropagation()
+                        return _vm.mouseOutSubMenu($event)
+                      }
+                    }
                   },
-                  mouseout: function($event) {
-                    $event.stopPropagation()
-                    return _vm.mouseOutSubMenu($event)
-                  }
-                }
-              },
-              [
-                _c("i", {
-                  ref: "icon",
-                  refInFor: true,
-                  class: _vm.iconClass[n - 1]
-                })
-              ]
-            )
+                  [
+                    _c("i", {
+                      ref: "icon",
+                      refInFor: true,
+                      class: _vm.iconClass[n - 1]
+                    })
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            n === 4
+              ? _c(
+                  "a",
+                  {
+                    style: _vm.subMenuStyle,
+                    attrs: {
+                      onclick:
+                        "event.preventDefault();\n            document.getElementById('logout-form').submit();",
+                      target: _vm.openNewTab
+                    },
+                    on: {
+                      mouseover: function($event) {
+                        $event.stopPropagation()
+                        return _vm.mouseEnterSubMenu($event)
+                      },
+                      mouseout: function($event) {
+                        $event.stopPropagation()
+                        return _vm.mouseOutSubMenu($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      ref: "icon",
+                      refInFor: true,
+                      staticClass: "fa fa-sign-out-alt"
+                    })
+                  ]
+                )
+              : _vm._e()
           ]
         )
       }),
+      _vm._v(" "),
+      _c(
+        "form",
+        {
+          staticStyle: { display: "none" },
+          attrs: { id: "logout-form", action: "/logout", method: "POST" }
+        },
+        [_vm._v("\n        @csrf\n    ")]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "menu", style: _vm.menuStyle }, [
         _c("div", { staticClass: "core-menu", on: { click: _vm.toggleMenu } }, [
