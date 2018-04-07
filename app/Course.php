@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
-    protected $fillable = ['subject_id', 'name', 'credits'];
+    protected $fillable = ['subject_id', 'name', 'description', 'credits'];
 
     public function subject() {
         return $this->belongsTo(Subject::class);

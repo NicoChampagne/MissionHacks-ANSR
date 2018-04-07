@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name','socialID', 'email', 'password',
+        'name', 'socialID', 'email', 'password',
     ];
 
     /**
@@ -24,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'socialID','password', 'remember_token',
+        'socialID', 'password', 'remember_token',
     ];
 
     public function courses() {
@@ -35,8 +35,17 @@ class User extends Authenticatable
         return $this->hasMany(Course::class);
     }
 
-    //TODO:
+    //TODO: Permissions
     public function permitted() {
         //return $this->hasMany()
+    }
+
+    public function subjectScore(Subject $subject) {
+        $sum = 0;
+        foreach($this->completedCourses as $course) {
+            if($course->subject_id == $subject->id) {
+                $sum += $course->credits;
+            }
+        }
     }
 }
