@@ -20,7 +20,9 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
+        "@fortawesome/fontawesome": "^1.1.5",
         "chart.js": "^2.7.2",
-        "vue-chartjs": "^3.3.1"
+        "vue-chartjs": "^3.3.1",
+        "vue-quick-menu": "^1.0.6"
     }
 }

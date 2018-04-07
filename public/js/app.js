@@ -14002,6 +14002,7 @@ window.Vue = __webpack_require__(37);
  */
 
 Vue.component('polar-area', __webpack_require__(236));
+Vue.component('quick-menu', __webpack_require__(245));
 
 var app = new Vue({
   el: '#app'
@@ -47229,7 +47230,88 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 /* 47 */,
-/* 48 */,
+/* 48 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
 /* 49 */,
 /* 50 */,
 /* 51 */
@@ -78796,16 +78878,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-Vue.component('line-chart', {
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'polar-area',
     extends: __WEBPACK_IMPORTED_MODULE_0_vue_chartjs__["a" /* default */].PolarArea,
-    props: { graphData: Array },
+    props: { graphdata: Array },
     mounted: function mounted() {
         this.renderChart({
             labels: ["Mathematics", "Sciences", "Languages", "Arts", "Physical Ed", "Social Studies", "History", "Practical Exp"],
             datasets: [{
                 label: 'My Data Set',
                 backgroundColor: ['rgba(255, 99, 132, 0.4)', 'rgba(54, 162, 235, 0.4)', 'rgba(255, 206, 186, 0.4', 'rgba(75, 192, 192, 0.4)', 'rgba(153, 102, 255, 0.4)', 'rgba(75, 92, 192, 0.4)', 'rgba(53, 102, 255, 0.4)', 'rgba(55, 159, 164, 0.4)'],
-                data: this.graphData
+                data: this.graphdata
             }]
 
         }, { responsive: true,
@@ -78817,6 +78900,596 @@ Vue.component('line-chart', {
             } });
     }
 });
+
+/***/ }),
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __webpack_require__(242)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+var options = null
+var ssrIdKey = 'data-vue-ssr-id'
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction, _options) {
+  isProduction = _isProduction
+
+  options = _options || {}
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[' + ssrIdKey + '~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+  if (options.ssrId) {
+    styleElement.setAttribute(ssrIdKey, obj.id)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
+/* 242 */
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
+
+/***/ }),
+/* 243 */,
+/* 244 */,
+/* 245 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(251)
+}
+var normalizeComponent = __webpack_require__(11)
+/* script */
+var __vue_script__ = __webpack_require__(248)
+/* template */
+var __vue_template__ = __webpack_require__(250)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/QuickMenu.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-77c45ac5", Component.options)
+  } else {
+    hotAPI.reload("data-v-77c45ac5", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 246 */,
+/* 247 */,
+/* 248 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'quick-menu',
+    props: {
+        menuCount: {
+            type: Number,
+            required: false,
+            default: 4
+        },
+        iconClass: {
+            type: Array,
+            required: true
+        },
+        menuUrlList: {
+            type: Array,
+            required: true
+        },
+        backgroundColor: {
+            type: String,
+            default: '#20babb'
+        },
+        color: {
+            type: String,
+            default: '#fff'
+        },
+        isOpenNewTab: {
+            type: Boolean,
+            default: false
+        },
+        position: {
+            type: String,
+            default: 'top-left'
+        }
+    },
+    computed: {
+        openNewTab: function openNewTab() {
+            return this.isOpenNewTab ? '_blank' : '_self';
+        },
+        quickMenuStyle: function quickMenuStyle() {
+            var topPosition = { top: '30px' },
+                bottomPosition = { bottom: '30px' },
+                leftPosition = { left: '30px' },
+                rightPosition = { right: '30px' };
+
+            var style = this.isTop ? topPosition : bottomPosition;
+            Object.assign(style, this.isLeft ? leftPosition : rightPosition);
+            Object.assign(style, { transform: this.isLeft ? "rotate(-180deg)" : "rotate(180deg)" });
+            return style;
+        },
+        menuStyle: function menuStyle() {
+            return {
+                backgroundColor: this.backgroundColor,
+                color: this.color
+            };
+        },
+        subMenuStyle: function subMenuStyle() {
+            var style = {
+                backgroundColor: this.backgroundColor,
+                color: this.color
+            };
+            return style;
+        },
+        isTop: function isTop() {
+            return !!~this.position.toLowerCase().indexOf('top');
+        },
+        isLeft: function isLeft() {
+            return !!~this.position.toLowerCase().indexOf('left');
+        }
+    },
+    data: function data() {
+        return {
+            menuSize: 60,
+            subMenu4: [[["0", "-160"], ["-80", "-138.6"], ["-138.6", "-80"], ["-160", "0"]], [["0", "-160"], ["80", "-138.6"], ["138.6", "-80"], ["160", "0"]], [["0", "160"], ["138.6", "80"], ["80", "138.6"], ["160", "0"]], [["-160", "0"], ["-138.6", "80"], ["-80", "138.6"], ["0", "160"]]],
+            subMenu3: [[["-160", "0"], ["-113", "-113"], ["0", "-160"]], [["0", "-160"], ["113", "-113"], ["160", "0"]], [["0", "160"], ["113", "113"], ["160", "0"]], [["-160", "0"], ["-113", "113"], ["0", "160"]]],
+            subMenu2: [[["-160", "0"], ["0", "-160"]], [["0", "-160"], ["160", "0"]], [["0", "160"], ["160", "0"]], [["-160", "0"], ["0", "160"]]]
+        };
+    },
+
+    methods: {
+        getSubMenu: function getSubMenu(n) {
+            var menuPosition = this.menuCount === 4 ? this.subMenu4 : this.menuCount === 3 ? this.subMenu3 : this.subMenu2;
+            menuPosition = this.isTop && this.isLeft ? menuPosition[2] : this.isTop && !this.isLeft ? menuPosition[1] : !this.isTop && this.isLeft ? menuPosition[3] : menuPosition[0];
+            return { top: menuPosition[n][0] + 'px', left: menuPosition[n][1] + 'px' };
+        },
+        toggleMenu: function toggleMenu(e) {
+            console.log(this.$refs);
+            var menuEl = this.$refs.QuickMenu;
+            var menuIconEl = this.$refs.icon;
+            if (!~menuEl.className.indexOf(' active')) {
+                menuEl.className += ' active';
+                menuIconEl.forEach(function (element, index) {
+                    element.className += ' menu-animate';
+                });
+            } else {
+                menuEl.className = menuEl.className.replace(' active', '');
+                menuIconEl.forEach(function (element, index) {
+                    element.className = element.className.replace(' menu-animate', '');
+                });
+            }
+        },
+        mouseEnterSubMenu: function mouseEnterSubMenu(e) {
+            if (e.target.tagName === 'A') {
+                e.target.style.backgroundColor = this.lightenColor(this.backgroundColor, 20);
+                // e.target.firstElementChild.style.backgroundColor = this.lightenColor(this.backgroundColor, 20)
+            } else if (e.target.tagName === 'I') {
+                e.target.parentElement.style.backgroundColor = this.lightenColor(this.backgroundColor, 20);
+                // e.target.style.backgroundColor = this.lightenColor(this.backgroundColor, 20)
+            }
+        },
+        mouseOutSubMenu: function mouseOutSubMenu(e) {
+            if (e.target.tagName === 'A') {
+                e.target.style.backgroundColor = this.backgroundColor;
+                // e.target.firstElementChild.style.backgroundColor = this.backgroundColor
+            } else if (e.target.tagName === 'I') {
+                e.target.parentElement.style.backgroundColor = this.backgroundColor;
+                // e.target.style.backgroundColor = this.backgroundColor
+            }
+        },
+        lightenColor: function lightenColor(hex, amt) {
+
+            var usePound = false;
+
+            if (hex[0] === '#') {
+                hex = hex.slice(1);
+                usePound = true;
+            }
+
+            var num = parseInt(hex, 16);
+            var r = (num >> 16) + amt;
+
+            if (r > 255) r = 255;else if (r < 0) r = 0;
+
+            var b = (num >> 8 & 0x00FF) + amt;
+
+            if (b > 255) b = 255;else if (b < 0) b = 0;
+
+            var g = (num & 0x0000FF) + amt;
+
+            if (g > 255) g = 255;else if (g < 0) g = 0;
+            return (usePound ? '#' : '') + (g | b << 8 | r << 16).toString(16);
+        }
+    }
+});
+
+/***/ }),
+/* 249 */,
+/* 250 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { ref: "QuickMenu", staticClass: "quick-menu", style: _vm.quickMenuStyle },
+    [
+      _vm._l(_vm.menuCount, function(n) {
+        return _c(
+          "div",
+          { staticClass: "sub-menu", style: _vm.getSubMenu(n - 1) },
+          [
+            _c(
+              "a",
+              {
+                style: _vm.subMenuStyle,
+                attrs: { href: _vm.menuUrlList[n - 1], target: _vm.openNewTab },
+                on: {
+                  mouseover: function($event) {
+                    $event.stopPropagation()
+                    return _vm.mouseEnterSubMenu($event)
+                  },
+                  mouseout: function($event) {
+                    $event.stopPropagation()
+                    return _vm.mouseOutSubMenu($event)
+                  }
+                }
+              },
+              [
+                _c("i", {
+                  ref: "icon",
+                  refInFor: true,
+                  class: _vm.iconClass[n - 1]
+                })
+              ]
+            )
+          ]
+        )
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "menu", style: _vm.menuStyle }, [
+        _c("div", { staticClass: "core-menu", on: { click: _vm.toggleMenu } }, [
+          _c("div", { staticClass: "bar" })
+        ])
+      ])
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-77c45ac5", module.exports)
+  }
+}
+
+/***/ }),
+/* 251 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(252);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(241)("d923ca28", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-77c45ac5\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/less-loader/dist/cjs.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./QuickMenu.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-77c45ac5\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/less-loader/dist/cjs.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./QuickMenu.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 252 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(48)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.menu-animate {\n  -webkit-animation: bounce 1s linear 1s;\n  animation: bounce 1s linear 1s;\n}\n.quick-menu {\n  color: #fff;\n  position: fixed;\n  width: 60px;\n  height: 60px;\n  -webkit-transition: all 1s ease;\n  transition: all 1s ease;\n  right: 30px;\n}\n.quick-menu > .menu {\n  display: block;\n  position: absolute;\n  border-radius: 50% !important;\n  width: 60px;\n  height: 60px;\n  text-align: center;\n  -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.23), 0 3px 10px rgba(0, 0, 0, 0.16);\n          box-shadow: 0 3px 10px rgba(0, 0, 0, 0.23), 0 3px 10px rgba(0, 0, 0, 0.16);\n  color: #fff;\n  -webkit-transition: all 1s ease;\n  transition: all 1s ease;\n}\n.quick-menu > .menu .core-menu {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  left: 0px;\n  top: 0px;\n  width: 60px;\n  height: 60px;\n  -webkit-transform: rotate(180deg);\n  transform: rotate(180deg);\n  -webkit-transition: all 1s ease;\n  transition: all 1s ease;\n}\n.quick-menu > .menu .core-menu .bar {\n  -webkit-transition: all 1s ease;\n  transition: all 1s ease;\n  width: 28px;\n  height: 3px;\n  background: #fff;\n  position: absolute;\n  top: 35%;\n  margin-top: -1.5px;\n  left: 16px;\n  -webkit-transform-origin: 0% 50%;\n  transform-origin: 0% 50%;\n}\n.quick-menu > .menu .core-menu .bar:before,\n.quick-menu > .menu .core-menu .bar:after {\n  -webkit-transition: all 1s ease;\n  transition: all 1s ease;\n  content: '';\n  width: 28px;\n  height: 3px;\n  background: #fff;\n  position: absolute;\n  left: 0px;\n  -webkit-transform-origin: 0% 50%;\n  transform-origin: 0% 50%;\n}\n.quick-menu > .menu .core-menu .bar:before {\n  margin-top: 30%;\n}\n.quick-menu > .menu .core-menu .bar:after {\n  margin-top: 60%;\n}\n.quick-menu .sub-menu {\n  -webkit-box-sizing: border-box;\n  box-sizing: border-box;\n  position: absolute;\n  width: 60px;\n  height: 60px;\n  font-size: 38px;\n  text-align: center;\n  border-radius: 50% !important;\n}\n.quick-menu .sub-menu a {\n  outline: none;\n  text-decoration: none;\n  display: inline-block;\n  border-radius: 50% !important;\n  width: 100%;\n  height: 100%;\n}\n.quick-menu .sub-menu a i {\n  outline: none;\n  font-size: 30px;\n  margin-top: 12px;\n  background: transparent;\n}\n.quick-menu .sub-menu a i:before {\n  vertical-align: middle;\n}\n.quick-menu .sub-menu a:hover {\n  cursor: pointer;\n}\n.quick-menu.active {\n  -webkit-transform: rotate(0deg) !important;\n  transform: rotate(0deg) !important;\n}\n.quick-menu.active .menu {\n  -webkit-transform: scale(0.7);\n  transform: scale(0.7);\n}\n.quick-menu.active .menu .bar {\n  top: 50%;\n  margin-top: -1.5px;\n  left: 50%;\n  margin-left: -12px;\n  -webkit-transform-origin: 50% 50%;\n  transform-origin: 50% 50%;\n  -webkit-transform: rotate(405deg);\n  transform: rotate(405deg);\n}\n.quick-menu.active .menu .bar:before {\n  -webkit-transform-origin: 50% 50%;\n  transform-origin: 50% 50%;\n  -webkit-transform: rotate(-450deg);\n  transform: rotate(-450deg);\n  margin-top: 0px;\n}\n.quick-menu.active .menu .bar:after {\n  opacity: 0;\n}\n@-webkit-keyframes bounce {\n0%,\n  100% {\n    -webkit-transform: translateY(0px);\n}\n10% {\n    -webkit-transform: translateY(6px);\n}\n30% {\n    -webkit-transform: translateY(-4px);\n}\n70% {\n    -webkit-transform: translateY(3px);\n}\n90% {\n    -webkit-transform: translateY(-2px);\n}\n}\n@keyframes bounce {\n0%,\n  100% {\n    -webkit-transform: translateY(0px);\n    transform: translateY(0px);\n}\n10% {\n    -webkit-transform: translateY(6px);\n    transform: translateY(6px);\n}\n30% {\n    -webkit-transform: translateY(-4px);\n    transform: translateY(-4px);\n}\n70% {\n    -webkit-transform: translateY(3px);\n    transform: translateY(3px);\n}\n90% {\n    -webkit-transform: translateY(-2px);\n    transform: translateY(-2px);\n}\n}\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);
