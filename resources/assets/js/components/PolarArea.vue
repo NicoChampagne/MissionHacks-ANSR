@@ -4,7 +4,7 @@
     export default {
         name: 'polar-area',
         extends: VueChartJs.PolarArea,
-        props: { graphdata: Array },
+        props: { graphdata: Array},
         mounted () {
             this.renderChart({
                 labels: [
@@ -43,9 +43,9 @@
                         var label = chartData.labels[idx];
                         var value = chartData.datasets[0].data[idx];
 
-                        var url = "http://example.com/?label=" + label + "&value=" + value;
-                        console.log(url);
-                        alert(url);
+                        var url = window.location.href + "&value=" + value;
+                        window.location.replace(url);
+                        history.pushState('graph click', url);
                     }
                 },
                 responsive: true,
