@@ -15,6 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/mentors','MentorController@index' , function () {
+    return view('mentors');
+});
+
+Route::get('/exams','ExamsController@index' , function () {
+    return view('exams');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
