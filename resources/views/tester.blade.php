@@ -8,7 +8,9 @@
     <div class="fluid-container">
         <div class="jumbotron">
             <div class="text-center">
-             <h1>EduPath</h1>
+
+                <h1>{{$result}}</h1>
+
             </div>
         </div>
         <div class="text-center container-fluid">
