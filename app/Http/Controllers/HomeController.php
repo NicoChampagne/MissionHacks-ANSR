@@ -31,6 +31,9 @@ class HomeController extends Controller
         $subjectArray= new Collection();
         $creditsArray= new Collection();
 
+        $allUsers = User::all();
+
+
         foreach($allSubjects as $index => $subject) {
             $subjectArray->push($subject->name);
             $creditsArray->push(3);
@@ -39,7 +42,8 @@ class HomeController extends Controller
         return view('home', [
             'profile' => $profile,
             'credits' => $creditsArray,
-            'subjects'=> $subjectArray
+            'subjects'=> $subjectArray,
+            'allusers'=> $allUsers
         ]);
     }
 }
