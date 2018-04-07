@@ -19,6 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('socialID')->unique();
             $table->string('email')->unique();
             $table->string('password');
+            $table->boolean('isAdmin')->default(0);
+            $table->boolean('isMentor')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

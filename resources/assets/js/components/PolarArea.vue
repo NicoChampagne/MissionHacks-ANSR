@@ -1,7 +1,8 @@
 <script>
     import VueChartJs from 'vue-chartjs'
 
-    Vue.component('line-chart', {
+    export default {
+        name: 'polar-area',
         extends: VueChartJs.PolarArea,
         props: { graphdata: Array },
         mounted () {
@@ -32,12 +33,28 @@
                     }
                 ],
 
-            }, {responsive: true,
+            }, {
+                onClick: function (evt) {
+                    var activePoints = this.getElementsAtEvent(evt);
+                    if (activePoints[0]) {
+                        var chartData = activePoints[0]['_chart'].config.data;
+                        var idx = activePoints[0]['_index'];
+
+                        var label = chartData.labels[idx];
+                        var value = chartData.datasets[0].data[idx];
+
+                        var url = "http://example.com/?label=" + label + "&value=" + value;
+                        console.log(url);
+                        alert(url);
+                    }
+                },
+                responsive: true,
                 maintainAspectRatio: true,
                 title: {
                     display: true,
                     position: 'bottom',
-                    text: 'Student Polar Chart'
+                    text:'Student Polar Chart'
                 }})
         }
-    })</script>
+    }
+</script>
