@@ -3,7 +3,7 @@
 
     Vue.component('line-chart', {
         extends: VueChartJs.PolarArea,
-        props: { graphData: Array },
+        props: { graphdata: Array },
         mounted () {
             this.renderChart({
                 labels: [
@@ -28,7 +28,7 @@
                             'rgba(53, 102, 255, 0.4)',
                             'rgba(55, 159, 164, 0.4)'
                         ],
-                        data: this.graphData
+                        data: this.graphdata
                     }
                 ],
 
