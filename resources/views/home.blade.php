@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header"> {{ Auth::user()->name }}'s academic path</div>
+                <div class="card-header"> {{ $profile->name }}'s academic path</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -15,9 +15,12 @@
                         </div>
                     @endif
                         <quick-menu :icon-class='["fa fa-users", "fa fa-graduation-cap","fa fa-book","fa fa-sign-out-alt"]'
-                                    :menu-url-list='["/profile","/exams","/mentors"]'>
+                                    :menu-url-list='["/profile/"+{{Auth::getUser()->id}},"/exams","/mentors"]'>
                         </quick-menu>
-                        <polar-area :graphData='[1,2,4,5,2,5,3,3]'></polar-area>
+                        <polar-area :graphData='{{$credits}}'
+                                    :graphLabels='{{$subjects}}'>
+
+                        </polar-area>
                 </div>
             </div>
         </div>
