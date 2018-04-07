@@ -26,6 +26,20 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="socialID" class="col-md-4 col-form-label text-md-right">{{ __('Social Insurance Number') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="socialID" type="password" class="form-control{{ $errors->has('socialID') ? ' is-invalid' : '' }}" name="socialID" value="{{ old('socialID') }}" required>
+
+                                @if ($errors->has('socialID'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('socialID') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
