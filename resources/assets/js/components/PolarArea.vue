@@ -4,18 +4,10 @@
     export default {
         name: 'polar-area',
         extends: VueChartJs.PolarArea,
-        props: { graphdata: Array },
+        props: { graphlabels: Array, graphdata: Array},
         mounted () {
             this.renderChart({
-                labels: [
-                    "Mathematics",
-                    "Sciences",
-                    "Languages",
-                    "Arts",
-                    "Physical Ed",
-                    "Social Studies",
-                    "History",
-                    "Practical Exp"],
+                labels: this.graphlabels,
                 datasets: [
                     {
                         label: 'My Data Set',
@@ -43,9 +35,9 @@
                         var label = chartData.labels[idx];
                         var value = chartData.datasets[0].data[idx];
 
-                        var url = "http://example.com/?label=" + label + "&value=" + value;
-                        console.log(url);
-                        alert(url);
+                        var url = window.location.href + "&value=" + value;
+                        window.location.replace(url);
+                        history.pushState('graph click', url);
                     }
                 },
                 responsive: true,

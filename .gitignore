@@ -15,3 +15,11 @@ yarn-error.log
 /_ide_helper.php
 /yarn.lock
 /composer.lock
+.DS_Store
+public/.DS_Store
+public/js/.DS_Store
+resources/.DS_Store
+resources/assets/.DS_Store
+resources/assets/js/.DS_Store
+resources/assets/js/components/.DS_Store
+storage/debugbar/

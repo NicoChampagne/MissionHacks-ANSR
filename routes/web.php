@@ -25,6 +25,4 @@ Route::get('/exams','ExamsController@index' , function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/tester', 'JobController@suggestJob')->name('tester');
+Route::get('/profile/{id}', 'HomeController@index')->name('home');
