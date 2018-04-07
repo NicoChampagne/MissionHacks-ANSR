@@ -1,11 +1,20 @@
 <template>
     <div class="quick-menu" ref="QuickMenu" :style="quickMenuStyle">
         <div v-for="n in menuCount" class="sub-menu" :style="getSubMenu(n-1)">
-            <a :href="menuUrlList[n-1]" :target="openNewTab" :style="subMenuStyle" @mouseover.stop="mouseEnterSubMenu" @mouseout.stop="mouseOutSubMenu">
+            <a v-if='n !== 4' :href="menuUrlList[n-1]" :target="openNewTab" :style="subMenuStyle" @mouseover.stop="mouseEnterSubMenu" @mouseout.stop="mouseOutSubMenu">
                 <i :class="iconClass[n-1]" ref="icon"></i>
             </a>
-
+            <a v-if='n === 4'
+               onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();"
+               :target="openNewTab" :style="subMenuStyle" @mouseover.stop="mouseEnterSubMenu" @mouseout.stop="mouseOutSubMenu">
+                <i class="fa fa-sign-out-alt" ref="icon"></i>
+            </a>
         </div>
+
+        <form id="logout-form" action="/logout" method="POST" style="display: none;">
+            @csrf
+        </form>
 
         <div class='menu' :style="menuStyle">
             <div class='core-menu' @click="toggleMenu">
