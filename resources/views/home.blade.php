@@ -14,7 +14,8 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    <line-chart :graphData='[1,2,4,5,2,5,3,3]'></line-chart>
+
                 </div>
             </div>
         </div>
