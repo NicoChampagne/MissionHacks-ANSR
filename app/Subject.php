@@ -9,6 +9,6 @@ class Subject extends Model
     protected $fillable = ['name', 'slug', 'description'];
 
     public function courses() {
-        $this->hasMany(Course::class);
+        return $this->hasMany(Course::class);
     }
 }

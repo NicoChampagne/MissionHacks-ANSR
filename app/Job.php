@@ -9,6 +9,6 @@ class Job extends Model
     protected $fillable = ['name', 'description'];
 
     public function required() {
-        $this->hasMany(Course::class);
+        $this->hasMany(Skill::class);
     }
 }
