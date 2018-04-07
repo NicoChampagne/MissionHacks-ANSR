@@ -26,6 +26,7 @@ class HomeController extends Controller
      */
     public function index($profileId)
     {
+        $profile = User::findOrFail($profileId);
         $allSubjects = Subject::all();
         $subjectArray= new Collection();
         $creditsArray= new Collection();
@@ -36,6 +37,7 @@ class HomeController extends Controller
         }
 
         return view('home', [
+            'profile' => $profile,
             'credits' => $creditsArray,
             'subjects'=> $subjectArray
         ]);
