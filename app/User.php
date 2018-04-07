@@ -26,4 +26,17 @@ class User extends Authenticatable
     protected $hidden = [
         'socialID','password', 'remember_token',
     ];
+
+    public function courses() {
+        return $this->hasMany(Course::class);
+    }
+
+    public function completedCourses() {
+        return $this->hasMany(Course::class);
+    }
+
+    //TODO:
+    public function permitted() {
+        //return $this->hasMany()
+    }
 }
