@@ -75,5 +75,6 @@ class User extends Authenticatable
                 $sum += $course->credits;
             }
         }
+        return $sum;
     }
 }
