@@ -17,7 +17,10 @@
                         <quick-menu :icon-class='["fa fa-users", "fa fa-graduation-cap","fa fa-book","fa fa-sign-out-alt"]'
                                     :menu-url-list='["/profile","/exams","/mentors"]'>
                         </quick-menu>
-                        <polar-area :graphData='[1,2,4,5,2,5,3,3]'></polar-area>
+                        <polar-area :graphData='{{$credits}}'
+                                    :graphLabels='{{$subjects}}'>
+
+                        </polar-area>
                 </div>
             </div>
         </div>

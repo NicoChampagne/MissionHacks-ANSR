@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\User;
+use App\Subject;
+use Illuminate\Support\Collection;
+use function Sodium\add;
 
 class HomeController extends Controller
 {
@@ -21,8 +24,20 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($profileid)
+    public function index($profileId)
     {
-        return view('home');
+        $allSubjects = Subject::all();
+        $subjectArray= new Collection();
+        $creditsArray= new Collection();
+
+        foreach($allSubjects as $index => $subject) {
+            $subjectArray->push($subject->name);
+            $creditsArray->push(3);
+        }
+
+        return view('home', [
+            'credits' => $creditsArray,
+            'subjects'=> $subjectArray
+        ]);
     }
 }

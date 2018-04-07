@@ -4,18 +4,10 @@
     export default {
         name: 'polar-area',
         extends: VueChartJs.PolarArea,
-        props: { graphdata: Array},
+        props: { graphlabels: Array, graphdata: Array},
         mounted () {
             this.renderChart({
-                labels: [
-                    "Mathematics",
-                    "Sciences",
-                    "Languages",
-                    "Arts",
-                    "Physical Ed",
-                    "Social Studies",
-                    "History",
-                    "Practical Exp"],
+                labels: this.graphlabels,
                 datasets: [
                     {
                         label: 'My Data Set',
