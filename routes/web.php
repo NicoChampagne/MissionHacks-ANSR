@@ -19,9 +19,7 @@ Route::get('/mentors','MentorController@index' , function () {
     return view('mentors');
 });
 
-Route::get('/exams','ExamsController@index' , function () {
-    return view('exams');
-});
+Route::get('/exams','ExamsController@index' , function () {});
 
 Auth::routes();
 
