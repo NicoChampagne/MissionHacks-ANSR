@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\exams;
+use App\Exam;
+use App\User;
 use Illuminate\Http\Request;
 
 class ExamsController extends Controller
@@ -35,7 +36,17 @@ class ExamsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(request(), [
+            'course' => 'required',
+            'date' => 'required',
+        ]);
+
+        Exam::create([
+            'course' => request('course'),
+            'date' => request('date'),
+        ]);
+
+        return redirect()->back();
     }
 
     /**

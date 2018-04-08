@@ -19,7 +19,8 @@ Route::get('/mentors','MentorController@index' , function () {
     return view('mentors');
 });
 
-Route::get('/exams','ExamsController@index' , function () {});
+Route::get('/exams','ExamsController@index' );
+Route::get('/exams/store','ExamsController@/store' );
 
 Route::get('/tester','JobController@suggestJob');
 
