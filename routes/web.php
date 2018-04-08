@@ -20,10 +20,11 @@ Route::get('/mentors','MentorController@index' , function () {
 });
 
 Route::get('/exams','ExamsController@index' );
-Route::get('/exams/store','ExamsController@/store' );
+Route::post('/exams/store','ExamsController@store' )->name('bookExam');
 
 
 
 Auth::routes();
 
 Route::get('/profile/{id}', 'HomeController@index')->name('home');
+Route::get('/profile/{id}/exams', 'ExamsController@show');

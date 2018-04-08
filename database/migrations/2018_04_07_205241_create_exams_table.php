@@ -15,10 +15,15 @@ class CreateExamsTable extends Migration
     {
         Schema::create('exams', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('userId');
-            $table->text('course');
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('subject_id');
             $table->date('date');
             $table->timestamps();
+        });
+
+        Schema::table('exams', function(Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
         });
     }
 
