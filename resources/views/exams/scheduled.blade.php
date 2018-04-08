@@ -1,10 +1,7 @@
+@extends('layouts.app')
 
-        <h3 style="padding-bottom: 20px;">Your Scheduled exams</h3>
+@section('content')
 
-        @foreach($exams as $exam)
+@include('partials.schedule')
 
-        <div class="panel panel-info">
-            <div class="panel-heading">{{$exam->subject->name}} </div>
-            <div class="panel-body">{{$exam->date()->diffForHumans()}} </div>
-        </div>
-        @endforeach
+@endsection

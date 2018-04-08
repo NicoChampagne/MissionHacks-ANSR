@@ -16,9 +16,9 @@ class ExamsController extends Controller
      */
     public function index()
     {
-        //$exams = Exam::findOrFail($id)->first();
+        $exams = Exam::whereUserId(\Auth::id())->get();
 
-        return view('exams.book');
+        return view('exams.book',compact('exams'));
 
     }
 

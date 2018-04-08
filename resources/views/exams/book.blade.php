@@ -11,15 +11,15 @@
             <div class="form-group">
                 <label for="subject">Select Course</label>
                 <select class="form-control" id="subject" name="subject" style="height: 35px;" required>
-                    <option value="1" disabled selected>Select your course</option>
-                    <option value="2" >Mathematics</option>
-                    <option value="3" >Sciences</option>
-                    <option value="4" >Languages</option>
-                    <option value="5" >Arts</option>
-                    <option value="6" >Physical Education</option>
-                    <option value="7" >Social Studies</option>
-                    <option value="8" >History</option>
-                    <option value="9" >Practical Experience</option>
+                    <option value="" disabled selected>Select your course</option>
+                    <option value="1" >Mathematics</option>
+                    <option value="2" >Sciences</option>
+                    <option value="3" >Languages</option>
+                    <option value="4" >Arts</option>
+                    <option value="5" >Physical Education</option>
+                    <option value="6" >Social Studies</option>
+                    <option value="7" >History</option>
+                    <option value="8" >Practical Experience</option>
                 </select>
             </div>
 
@@ -37,7 +37,7 @@
 
     <div class = "container">
 
-        @include('scheduled')
+        @include('partials.schedule')
 
         {{--<h3 style="padding-bottom: 20px;">Your Scheduled exams</h3>--}}
 
