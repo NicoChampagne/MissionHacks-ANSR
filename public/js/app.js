@@ -19537,7 +19537,7 @@ module.exports = Cancel;
 /* unused harmony export VueCharts */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_index_js__ = __webpack_require__(178);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__BaseCharts__ = __webpack_require__(179);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__BaseCharts__["a"]; });
+/* unused harmony reexport Bar */
 /* unused harmony reexport HorizontalBar */
 /* unused harmony reexport Doughnut */
 /* unused harmony reexport Line */
@@ -19563,7 +19563,7 @@ var VueCharts = {
   mixins: __WEBPACK_IMPORTED_MODULE_0__mixins_index_js__["a" /* default */],
   generateChart: __WEBPACK_IMPORTED_MODULE_1__BaseCharts__["j" /* generateChart */]
 };
-/* harmony default export */ __webpack_exports__["b"] = (VueCharts);
+/* harmony default export */ __webpack_exports__["a"] = (VueCharts);
 
 
 /***/ }),
@@ -65987,7 +65987,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'polar-area',
-    extends: __WEBPACK_IMPORTED_MODULE_0_vue_chartjs__["b" /* default */].PolarArea,
+    extends: __WEBPACK_IMPORTED_MODULE_0_vue_chartjs__["a" /* default */].PolarArea,
     props: { graphlabels: Array, graphdata: Array },
     mounted: function mounted() {
         this.renderChart({
@@ -88273,15 +88273,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'bar-chart',
-    extends: __WEBPACK_IMPORTED_MODULE_0_vue_chartjs__["a" /* Bar */],
+    extends: __WEBPACK_IMPORTED_MODULE_0_vue_chartjs__["a" /* default */].Bar,
+    props: { labels: Array, data: Array },
     mounted: function mounted() {
-        // Overwriting base render method with actual data.
         this.renderChart({
+            labels: this.labels,
             datasets: [{
-                label: 'Job Market Prediction',
-                backgroundColor: '#54f8f0'
-            }]
-        });
+                label: 'Job Count',
+                backgroundColor: ['#a693f8', '#58f8bd', '#edf858', '#5156f8', '#31f814', '#f847cc', '#52f8ca', '#9997f8', '#c9f848', '#f8691a', '#45bff8', '#d5f8a9', '#f84660'],
+                data: this.data
+            }],
+            options: {
+                beginAtZero: true
+            }
+        }, {
+            onClick: function onClick(evt) {
+                var activePoints = this.getElementsAtEvent(evt);
+                if (activePoints[0]) {
+                    var chartData = activePoints[0]['_chart'].config.data;
+                    var idx = activePoints[0]['_index'];
+
+                    var url = window.location.href + "/" + (idx + 1);
+                    window.location.replace(url);
+                    history.pushState('graph click', url);
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true,
+            title: {
+                display: true,
+                position: 'bottom',
+                text: 'Future Job Trends'
+            } });
     }
 });
 

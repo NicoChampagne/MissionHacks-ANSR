@@ -42,10 +42,10 @@
                                         <div class="timeline-entry-inner">
                                             <time class="timeline-time">
                                                 <span>
-                                                    {{\Carbon\Carbon::createFromTimestamp($course->timestamp)->toTimeString()}}
+                                                    {{$course->updated_at->toDateString()}}
                                                 </span>
                                                 <span>
-                                                    {{\Carbon\Carbon::createFromTimestamp($course->timestamp)->diffForHumans()}}
+                                                    {{$course->updated_at->diffForHumans()}}
                                                 </span>
                                             </time>
 
