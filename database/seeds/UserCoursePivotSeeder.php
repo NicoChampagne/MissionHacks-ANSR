@@ -21,8 +21,8 @@ class UserCoursePivotSeeder extends Seeder
             }));
          });*/
 
-        App\User::all()->each(function (App\User $u) {
-            $subs = App\Subject::all();
+        $subs = App\Subject::all();
+        App\User::all()->each(function (App\User $u) use ($subs) {
             foreach ($subs as $s) {
                 $coursesCount = random_int(6,35);
 

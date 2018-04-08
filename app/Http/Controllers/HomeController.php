@@ -42,25 +42,6 @@ class HomeController extends Controller
 
         $allUsers = User::all();
 
-        $user = User::findOrFail($profileId);
-        //$subScore = "10 10 40 10 10 10 10 10";
-        $subScore = "";
-
-        $subs = Subject::all();
-        foreach ($subs as $sub) {
-            $subScore .= $user->subjectScore($sub).' ';
-        }
-        \Debugbar::addMessage($subScore);
-
-        $result = new Process("python ".base_path('PythonPrograms')."\jobSuggestion.py $subScore");
-        $result->run();
-
-        if (!$result->isSuccessful()) {
-            throw new ProcessFailedException($result);
-        }
-        $result= json_decode($result->getOutput(), true);
-
-
         // create collection with id and name for user profiles
         $userOptions = "[";
         foreach($allUsers as $user) {
@@ -74,6 +55,23 @@ class HomeController extends Controller
             $score = $profile->subjectScore($subject);
             $creditsArray->push($score);
         }
+
+        //$user = User::findOrFail($uid);
+        //$subScore = "10 10 40 10 10 10 10 10";
+        $subScore = "";
+
+        foreach ($creditsArray as $value) {
+            $subScore .= $value.' ';
+        }
+        \Debugbar::addMessage($subScore);
+
+        $result = new Process("python ".base_path('PythonPrograms')."\jobSuggestion.py $subScore");
+        $result->run();
+
+        if (!$result->isSuccessful()) {
+            throw new ProcessFailedException($result);
+        }
+        $result= json_decode($result->getOutput(), true);
 
         return view('home', [
             'profile' => $profile,

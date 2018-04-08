@@ -20,11 +20,11 @@ class JobController extends Controller
     {
         $allJobs = array();
         $allUsers = User::all();
+        $subs = Subject::all();
 
         foreach($allUsers as $user) {
             $subScore = "";
 
-            $subs = Subject::all();
             foreach ($subs as $sub) {
                 $subScore .= $user->subjectScore($sub) . ' ';
             }

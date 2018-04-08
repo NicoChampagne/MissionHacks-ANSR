@@ -56,7 +56,7 @@ class User extends Authenticatable
     ];
 
     public function courses() {
-        return $this->belongsToMany(Course::class);//->withPivot('course_user', 'isCompleted');
+        return $this->belongsToMany(Course::class)->withPivot('isCompleted');
     }
 
     public function hasCompleted(Course $c) {
@@ -75,7 +75,7 @@ class User extends Authenticatable
                 $sum ++;
             }
         }
-        \Debugbar::addMessage("$this->name's $subject->name score is $sum");
+        //\Debugbar::addMessage("$this->name's $subject->name score is $sum");
         return $sum;
     }
 }
