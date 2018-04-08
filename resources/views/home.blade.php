@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="container text-center">
-{{--            Suggested Job: {{$result}}--}}
+            Suggested Job: {{$result}}
         </div>
     </div>
 

@@ -45,15 +45,15 @@ class HomeController extends Controller
         foreach ($subs as $sub) {
             $subScore .= $user->subjectScore($sub).' ';
         }
-        //\Debugbar::addMessage($subScore);
+        \Debugbar::addMessage($subScore);
 
-//        $result = new Process("python ".base_path('PythonPrograms')."\jobSuggestion.py $subScore");
-//        $result->run();
-//
-//        if (!$result->isSuccessful()) {
-//            throw new ProcessFailedException($result);
-//        }
-//        $result= json_decode($result->getOutput(), true);
+        $result = new Process("python ".base_path('PythonPrograms')."\jobSuggestion.py $subScore");
+        $result->run();
+
+        if (!$result->isSuccessful()) {
+            throw new ProcessFailedException($result);
+        }
+        $result= json_decode($result->getOutput(), true);
 
 
         // create collection with id and name for user profiles
@@ -75,7 +75,7 @@ class HomeController extends Controller
             'credits' => $creditsArray,
             'subjects'=> $subjectArray,
             'userOptions'=> $userOptions,
-//            'result' => $result,
+            'result' => $result,
         ]);
     }
 
