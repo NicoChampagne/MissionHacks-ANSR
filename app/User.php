@@ -65,7 +65,7 @@ class User extends Authenticatable
     }
 
     public function subjectScore(Subject $subject) {
-        $sum = 0;
+        $sum = 1;
         foreach($this->courses as $course) {
             if($course->subject_id == $subject->id) {
                 $sum ++;

@@ -5,7 +5,7 @@
         @foreach($exams as $exam)
 
         <div class="panel panel-info">
-            <div class="panel-heading">{{$exam->subject->name}} </div>
+            <div class="panel-heading">{{$exam->course->name}} </div>
             <div class="panel-body">{{$exam->date()->diffForHumans()}} </div>
         </div>
         @endforeach

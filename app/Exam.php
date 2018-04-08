@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Exam extends Model
 {
-    protected $fillable = ['user_id','subject_id','date'];
+    protected $fillable = ['user_id','subject_id','course_id','date'];
 
     public function user() {
         return $this->belongsTo(User::class);
@@ -33,6 +33,10 @@ class Exam extends Model
 
     public function subject() {
         return $this->belongsTo(Subject::class);
+    }
+
+    public function course() {
+        return $this->belongsTo(Course::class);
     }
 
     public function date() {

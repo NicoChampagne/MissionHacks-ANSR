@@ -60,9 +60,19 @@ class ExamsController extends Controller
             'date' => 'required',
         ]);
 
+        if(!\Auth::check()) {
+            return redirect()->back();
+        }
+        $subject = \App\Subject::findOrFail(request('subject'))->first();
+        $user = \Auth::user();
+
+        $lvl = $user->subjectScore($subject) + 1;
+        $course = \App\Course::whereName("$subject->name $lvl")->first();
+
          Exam::create([
              'user_id' => \Auth::id(),
-             'subject_id' => request('subject'),
+             'subject_id' => $subject->id,
+             'course_id' => $course->id,
              'date' => new Carbon(request('date')),//->toDateTimeString(),
         ]);
 
