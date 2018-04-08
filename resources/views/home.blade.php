@@ -5,9 +5,10 @@
     <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <search-input :useroptions='{{$userOptions}}'></search-input>
+            <br />
             <div class="card">
                 <div class="card-header"> {{ $profile->name }}'s academic path</div>
-
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success">
