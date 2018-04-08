@@ -8,10 +8,6 @@
                 <search-input :useroptions='{{$userOptions}}'></search-input>
                 <br />
 
-                <div>
-                    <input type="text" name="search" placeholder="Search...">
-                </div>
-
                 <div class="card">
                     <div class="card-header"> {{ $profile->name }}'s academic path</div>
                     <div class="card-body">
