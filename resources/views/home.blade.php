@@ -25,25 +25,46 @@
                 </div>
             </div>
         </div>
-        <button style="margin-top: 20px" type="button" class="row text-center btn btn-info" data-toggle="modal" data-target="#exampleModal">
+        <button style="margin-top: 20px" type="button" class="row text-center btn btn-info" data-toggle="modal" data-target="#predictModal">
+            Career Prediction
+        </button>
+        <button style="margin-top: 20px" type="button" class="row text-center btn btn-info" data-toggle="modal" data-target="#jobMarketModal">
             Career Prediction
         </button>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Job Prediction</h5>
-                </div>
-                <div class="modal-body">
-                    Based on your academic achievememnts and preferences, we have determined you are likely to become a(n) <span style="color:darkolivegreen;font-weight:bold; font-size:17px;">{{$result}}</span>. With more information the prediction becomes more accurate.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+    <!-- Your Prediction Modal -->t
+        <div class="modal fade" id="predictModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Job Prediction</h5>
+                    </div>
+                    <div class="modal-body">
+                        Based on your academic achievememnts and preferences, we have determined you are likely to become a(n) <span style="color:darkolivegreen;font-weight:bold; font-size:17px;">{{$result}}</span>. With more information the prediction becomes more accurate.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- Job Market Prediction -->
+        <div class="modal fade" id="jobMarketModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Job Prediction</h5>
+                    </div>
+                    <div class="modal-body">
+                        Based on your academic achievememnts and preferences, we have determined you are likely to become a(n) <span style="color:darkolivegreen;font-weight:bold; font-size:17px;">{{$result}}</span>. With more information the prediction becomes more accurate.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 @endsection
