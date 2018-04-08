@@ -46,19 +46,19 @@ class JobController extends Controller
             arsort($allJobs);
         }
 
-           // return view("jobs",['allJobs'=>$allJobs]);
+        $jobs = '[';
+        foreach (array_keys($allJobs) as $job) {
+            $jobs .= '"'.$job.'", ';
+        }
+        $jobs .= ']';
 
-            $jobs = array_keys($allJobs);
-            $showMany = array_values($allJobs);
+        $counts= '[';
+        foreach (array_values($allJobs) as $job) {
+            $counts .= '"'.$job.'", ';
+        }
+        $counts .= ']';
 
-            $jsonJobs = json_encode($jobs);
-            $jsonShowMany = json_encode($showMany);
-
-            return view('jobs', [
-                'jobs' => $jsonJobs,
-                'showMany' => $jsonShowMany,
-            ]);
-
+        return view('jobs', compact(['jobs', 'counts']));
     }
 
 

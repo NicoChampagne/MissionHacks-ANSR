@@ -4583,7 +4583,7 @@
 "use strict";
 
 
-module.exports = __webpack_require__(10);
+module.exports = __webpack_require__(9);
 module.exports.easing = __webpack_require__(182);
 module.exports.canvas = __webpack_require__(183);
 module.exports.options = __webpack_require__(184);
@@ -5586,115 +5586,6 @@ module.exports = {
 
 /***/ }),
 /* 9 */
-/***/ (function(module, exports) {
-
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file.
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = injectStyles
-  }
-
-  if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return existing(h, context)
-      }
-    }
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6040,7 +5931,7 @@ helpers.getValueAtIndexOrDefault = helpers.valueAtIndexOrDefault;
 
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6142,6 +6033,115 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 module.exports = defaults;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)))
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file.
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier /* server only */
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = injectStyles
+  }
+
+  if (hook) {
+    var functional = options.functional
+    var existing = functional
+      ? options.render
+      : options.beforeCreate
+
+    if (!functional) {
+      // inject component registration as beforeCreate hook
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    } else {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return existing(h, context)
+      }
+    }
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
 
 /***/ }),
 /* 12 */
@@ -19537,7 +19537,7 @@ module.exports = Cancel;
 /* unused harmony export VueCharts */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_index_js__ = __webpack_require__(178);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__BaseCharts__ = __webpack_require__(179);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__BaseCharts__["a"]; });
+/* unused harmony reexport Bar */
 /* unused harmony reexport HorizontalBar */
 /* unused harmony reexport Doughnut */
 /* unused harmony reexport Line */
@@ -19563,7 +19563,7 @@ var VueCharts = {
   mixins: __WEBPACK_IMPORTED_MODULE_0__mixins_index_js__["a" /* default */],
   generateChart: __WEBPACK_IMPORTED_MODULE_1__BaseCharts__["j" /* generateChart */]
 };
-/* harmony default export */ __webpack_exports__["b"] = (VueCharts);
+/* harmony default export */ __webpack_exports__["a"] = (VueCharts);
 
 
 /***/ }),
@@ -32714,7 +32714,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(150);
-module.exports = __webpack_require__(242);
+module.exports = __webpack_require__(240);
 
 
 /***/ }),
@@ -32742,7 +32742,7 @@ Vue.component('polar-area', __webpack_require__(176));
 Vue.component('quick-menu', __webpack_require__(227));
 Vue.component('datepicker', __webpack_require__(235));
 Vue.component('search-input', __webpack_require__(236));
-Vue.component('bar-chart', __webpack_require__(240));
+Vue.component('bar-chart', __webpack_require__(244));
 
 var app = new Vue({
   el: '#app'
@@ -53830,7 +53830,7 @@ module.exports = __webpack_require__(155);
 var utils = __webpack_require__(3);
 var bind = __webpack_require__(15);
 var Axios = __webpack_require__(157);
-var defaults = __webpack_require__(11);
+var defaults = __webpack_require__(10);
 
 /**
  * Create an instance of Axios
@@ -53913,7 +53913,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(11);
+var defaults = __webpack_require__(10);
 var utils = __webpack_require__(3);
 var InterceptorManager = __webpack_require__(166);
 var dispatchRequest = __webpack_require__(167);
@@ -54452,7 +54452,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(3);
 var transformData = __webpack_require__(168);
 var isCancel = __webpack_require__(19);
-var defaults = __webpack_require__(11);
+var defaults = __webpack_require__(10);
 var isAbsoluteURL = __webpack_require__(169);
 var combineURLs = __webpack_require__(170);
 
@@ -65933,7 +65933,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(11)
 /* script */
 var __vue_script__ = __webpack_require__(177)
 /* template */
@@ -65987,7 +65987,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'polar-area',
-    extends: __WEBPACK_IMPORTED_MODULE_0_vue_chartjs__["b" /* default */].PolarArea,
+    extends: __WEBPACK_IMPORTED_MODULE_0_vue_chartjs__["a" /* default */].PolarArea,
     props: { graphlabels: Array, graphdata: Array },
     mounted: function mounted() {
         this.renderChart({
@@ -66406,7 +66406,7 @@ module.exports = function() {
 "use strict";
 
 
-var helpers = __webpack_require__(10);
+var helpers = __webpack_require__(9);
 
 /**
  * Easing functions adapted from Robert Penner's easing equations.
@@ -66663,7 +66663,7 @@ helpers.easingEffects = effects;
 "use strict";
 
 
-var helpers = __webpack_require__(10);
+var helpers = __webpack_require__(9);
 
 /**
  * @namespace Chart.helpers.canvas
@@ -66884,7 +66884,7 @@ helpers.drawRoundedRectangle = function(ctx) {
 "use strict";
 
 
-var helpers = __webpack_require__(10);
+var helpers = __webpack_require__(9);
 
 /**
  * @alias Chart.helpers.options
@@ -78827,7 +78827,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(228)
 }
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(11)
 /* script */
 var __vue_script__ = __webpack_require__(233)
 /* template */
@@ -79547,7 +79547,7 @@ module.exports=function(e){function t(i){if(n[i])return n[i].exports;var r=n[i]=
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(11)
 /* script */
 var __vue_script__ = __webpack_require__(237)
 /* template */
@@ -88216,12 +88216,21 @@ if (false) {
 
 /***/ }),
 /* 240 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 241 */,
+/* 242 */,
+/* 243 */,
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(11)
 /* script */
-var __vue_script__ = __webpack_require__(241)
+var __vue_script__ = __webpack_require__(245)
 /* template */
 var __vue_template__ = null
 /* template functional */
@@ -88262,7 +88271,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 241 */
+/* 245 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -88273,23 +88282,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'bar-chart',
-    extends: __WEBPACK_IMPORTED_MODULE_0_vue_chartjs__["a" /* Bar */],
+    extends: __WEBPACK_IMPORTED_MODULE_0_vue_chartjs__["a" /* default */].Bar,
+    props: { labels: Array, data: Array },
     mounted: function mounted() {
-        // Overwriting base render method with actual data.
         this.renderChart({
+            labels: this.labels,
             datasets: [{
-                label: 'Job Market Prediction',
-                backgroundColor: '#54f8f0'
-            }]
-        });
+                label: 'Count',
+                backgroundColor: ['#a693f8', '#58f8bd', '#edf858', '#5156f8', '#31f814', '#f847cc', '#52f8ca', '#9997f8', '#c9f848', '#f8691a', '#45bff8', '#d5f8a9', '#f84660'],
+                data: this.data
+            }],
+            options: {
+                beginAtZero: true
+            }
+        }, {
+            onClick: function onClick(evt) {
+                var activePoints = this.getElementsAtEvent(evt);
+                if (activePoints[0]) {
+                    var chartData = activePoints[0]['_chart'].config.data;
+                    var idx = activePoints[0]['_index'];
+
+                    var url = window.location.href + "/" + (idx + 1);
+                    window.location.replace(url);
+                    history.pushState('graph click', url);
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true,
+            title: {
+                display: true,
+                position: 'bottom',
+                text: 'Hi'
+            } });
     }
 });
-
-/***/ }),
-/* 242 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

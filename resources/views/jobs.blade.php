@@ -49,11 +49,12 @@
         {{--</div>--}}
     {{--</div>--}}
 
-        <div>{{ $showMany }}</div>
-        <div>{{ $jobs }}</div>
 
-    <bar-chart :graphData='{{ $showMany }}'
-                :graphLabels='{{ $jobs }}'>
-    </bar-chart>
+<div v-cloak class="container text-center">
+    <div class="row justify-content-center">
+        <bar-chart :data='{{$counts}}' :labels='{{$jobs}}'>
+        </bar-chart>
+    </div>
+</div>
 
 @endsection
