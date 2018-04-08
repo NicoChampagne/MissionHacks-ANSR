@@ -30,3 +30,5 @@ Route::get('/profile/{id}/exams', 'ExamsController@show');
 
 Route::get('/admin','AdminController@index');
 Route::post('/admin/store','AdminController@store')->name('passOrFail');
+
+Route::get('/jobs','JobController@index');

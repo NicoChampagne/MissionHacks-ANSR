@@ -18,7 +18,34 @@ class JobController extends Controller
      */
     public function index()
     {
-        //
+        $allJobs = array();
+        $allUsers = User::all();
+
+        foreach($allUsers as $user) {
+            $subScore = "";
+
+            $subs = Subject::all();
+            foreach ($subs as $sub) {
+                $subScore .= $user->subjectScore($sub) . ' ';
+            }
+
+            $result = new Process("python " . base_path('PythonPrograms') . "\jobSuggestion.py $subScore");
+            $result->run();
+
+            if (!$result->isSuccessful()) {
+                throw new ProcessFailedException($result);
+            }
+            $result = json_decode($result->getOutput(), true);
+           
+            if (array_key_exists($result, $allJobs)) {
+                ++$allJobs[$result];
+            } else {
+                $allJobs[$result] = 1;
+            }
+            arsort($allJobs);
+        }
+            return view("jobs",['allJobs'=>$allJobs]);
+
     }
 
 
