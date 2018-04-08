@@ -1,8 +1,3 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
-
-<p align="center">
-
-
 ## About EduPath
 
 EduPath is the long awaited reform to the modern education system. EduPath is a government provided Application that allows Users to track their complete knowledge path throughout their whole life. Due to the education system being manditory throughout childhood to adolescence EduPath provides the needed curriculum to allow students to learn, be tested, and keep track of their academic Progress.
