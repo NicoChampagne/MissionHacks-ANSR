@@ -83,8 +83,8 @@
                                             @endif
 
                                             <div class="timeline-label">
-                                                @if ($i < 4) <h2><a href="#">{{$subject->name . " " .(40 - $courses->count() + 1 + $i)}}</a> <span>in progress</span></h2>
-                                                @else        <h2><a href="#">{{$subject->name . " " .(40 - $courses->count() + 1 + $i)}}</a> <span>not taken</span></h2>
+                                                @if ($i < 4) <h2><a href="#">{{$subject->name . " " .($courses->count() + 1 + $i)}}</a> <span>in progress</span></h2>
+                                                @else        <h2><a href="#">{{$subject->name . " " .($courses->count() + 1 + $i)}}</a> <span>not taken</span></h2>
                                                 @endif
                                                 <p>Tolerably earnestly middleton extremely distrusts she boy now not. Add and offered prepare how cordial two promise. Greatly who affixed suppose but enquire compact prepare all put. Added forth chief trees but rooms think may.</p>
                                             </div>
