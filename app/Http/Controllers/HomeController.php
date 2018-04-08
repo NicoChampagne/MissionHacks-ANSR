@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Job;
 use App\Subject;
 use Illuminate\Support\Collection;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 use function Sodium\add;
 
 class HomeController extends Controller
@@ -33,6 +36,25 @@ class HomeController extends Controller
 
         $allUsers = User::all();
 
+        $user = User::findOrFail($profileId);
+        //$subScore = "10 10 40 10 10 10 10 10";
+        $subScore = "";
+
+        $subs = Subject::all();
+        foreach ($subs as $sub) {
+            $subScore .= $user->subjectScore($sub).' ';
+        }
+        //\Debugbar::addMessage($subScore);
+
+        $result = new Process("python ".base_path('PythonPrograms')."\jobSuggestion.py $subScore");
+        $result->run();
+
+        if (!$result->isSuccessful()) {
+            throw new ProcessFailedException($result);
+        }
+        $result= json_decode($result->getOutput(), true);
+
+
         // create collection with id: name for user profiles
         $userOptions = "[";
         foreach($allUsers as $user) {
@@ -40,7 +62,7 @@ class HomeController extends Controller
         }
         $userOptions = $userOptions . "]";
 
-        // get course credits per profile
+
         foreach($allSubjects as $index => $subject) {
             $subjectArray->push($subject->name);
             $score = $profile->subjectScore($subject);
@@ -51,7 +73,8 @@ class HomeController extends Controller
             'profile' => $profile,
             'credits' => $creditsArray,
             'subjects'=> $subjectArray,
-            'userOptions'=> $userOptions
+            'userOptions'=> $userOptions,
+            'result' => $result,
         ]);
     }
 }

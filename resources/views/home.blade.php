@@ -27,5 +27,8 @@
                 </div>
             </div>
         </div>
+        <div class="container text-center">
+            Suggested Job: {{$result}}
+        </div>
     </div>
 @endsection

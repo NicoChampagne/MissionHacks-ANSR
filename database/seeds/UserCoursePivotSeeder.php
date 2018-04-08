@@ -14,7 +14,7 @@ class UserCoursePivotSeeder extends Seeder
         /*App\Subject::all()->each(function($s) {
             $s->courses()->saveMany(factory(\App\Course::class, 20)->create(['subject_id' => $s->id])
              ->each(function ($course) {
-                $users = App\User::orderBy(DB::raw('RAND()'))->take(25)->get();
+                $users = App\User::take(25)->get();
                 foreach ($users as $user) {
                     $user->courses()->attach($course->id);
                 }
@@ -33,22 +33,6 @@ class UserCoursePivotSeeder extends Seeder
                 foreach ($courses as $course) {
                     $u->courses()->attach($course->id);
                 }
-
-                /*for($i = $coursesCount; $i > 0 ; $i--) {
-                    $course = null;
-
-                    do {
-                        $id = random_int(1, App\Course::all()->count());
-                        $course = App\Course::findOrFail($id)->first();
-                        $valid = ($course === null || $course->subject_id !== $s->id);
-
-                        echo ("$id - $valid");
-                    } while ($course === null || $course->subject_id !== $s->id);
-
-                    if($course !== null && $course->subject_id !== $s->id) {
-                        $u->courses()->attach($course->id);
-                    }
-                }*/
             }
         });
     }

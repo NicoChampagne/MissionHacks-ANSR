@@ -22,9 +22,7 @@ Route::get('/mentors','MentorController@index' , function () {
 Route::get('/exams','ExamsController@index' );
 Route::get('/exams/store','ExamsController@/store' );
 
-Route::get('/tester','JobController@suggestJob');
 
-Route::get('/tester/{id}','JobController@suggestJob');
 
 Auth::routes();
 

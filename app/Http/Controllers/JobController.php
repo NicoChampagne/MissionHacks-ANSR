@@ -21,28 +21,6 @@ class JobController extends Controller
         //
     }
 
-    public function suggestJob($id = 1) #$id
-    {
-         $user = User::find($id);
-         //$subScore = "10 10 40 10 10 10 10 10";
-         $subScore = "";
-
-         $subs = Subject::all();
-         foreach ($subs as $sub) {
-             $subScore .= $user->subjectScore($sub).' ';
-         }
-        \Debugbar::addMessage($subScore);
-
-        $result = new Process("python ".base_path('PythonPrograms')."\jobSuggestion.py $subScore");
-        $result->run();
-
-        if (!$result->isSuccessful()) {
-            throw new ProcessFailedException($result);
-        }
-        $result= json_decode($result->getOutput(), true);
-
-        return view("tester")->with(compact('result'));
-    }
 
     /**
      * Show the form for creating a new resource.
