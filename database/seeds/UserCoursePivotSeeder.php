@@ -28,7 +28,7 @@ class UserCoursePivotSeeder extends Seeder
 
                 echo("$u->name will have $coursesCount $s->name courses\n");
 
-                $courses = App\Course::whereSubjectId($s->id)->get()->random($coursesCount);
+                $courses = App\Course::whereSubjectId($s->id)->paginate($coursesCount);
 
                 foreach ($courses as $course) {
                     $u->courses()->attach($course->id);

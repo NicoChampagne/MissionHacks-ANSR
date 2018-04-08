@@ -59,13 +59,17 @@ class User extends Authenticatable
         return $this->belongsToMany(Course::class);//->withPivot('course_user', 'isCompleted');
     }
 
+    public function hasCompleted(Course $c) {
+        return $this->courses->find($c->id) !== null;
+    }
+
     //TODO: Permissions
     public function permitted() {
         //return $this->hasMany()
     }
 
     public function subjectScore(Subject $subject) {
-        $sum = 1;
+        $sum = 0;
         foreach($this->courses as $course) {
             if($course->subject_id == $subject->id) {
                 $sum ++;
