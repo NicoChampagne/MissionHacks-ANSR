@@ -23,6 +23,10 @@ Route::get('/exams','ExamsController@index' , function () {
     return view('exams');
 });
 
+Route::get('/tester','JobController@suggestJob');
+
+Route::get('/tester/{id}','JobController@suggestJob');
+
 Auth::routes();
 
 Route::get('/profile/{id}', 'HomeController@index')->name('home');

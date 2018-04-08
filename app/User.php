@@ -56,11 +56,7 @@ class User extends Authenticatable
     ];
 
     public function courses() {
-    return $this->hasMany(Course::class);
-}
-
-    public function completedCourses() {
-        return $this->hasMany(Course::class);
+        return $this->belongsToMany(Course::class);//->withPivot('course_user', 'isCompleted');
     }
 
     //TODO: Permissions
@@ -70,10 +66,12 @@ class User extends Authenticatable
 
     public function subjectScore(Subject $subject) {
         $sum = 0;
-        foreach($this->completedCourses as $course) {
+        foreach($this->courses as $course) {
             if($course->subject_id == $subject->id) {
-                $sum += $course->credits;
+                $sum ++;
             }
         }
+        \Debugbar::addMessage("$this->name's $subject->name score is $sum");
+        return $sum;
     }
 }

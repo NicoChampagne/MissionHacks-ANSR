@@ -24,10 +24,11 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Course whereSubjectId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Course whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $users
  */
 class Course extends Model
 {
-    protected $fillable = ['subject_id', 'name', 'description', 'credits'];
+    protected $fillable = ['subject_id', 'name', 'description'];
 
     public function subject() {
         return $this->belongsTo(Subject::class, 'subject_id');
@@ -35,6 +36,10 @@ class Course extends Model
 
     public function title() {
         return $this->subject().'-'.$this->id();
+    }
+
+    public function users() {
+        return $this->belongsToMany(User::class);
     }
 
     public function requirements() {

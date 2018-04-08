@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Job;
-//use App\User;
+use App\User;
+use App\Subject;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
-
 use Illuminate\Http\Request;
 
 class JobController extends Controller
@@ -21,12 +21,19 @@ class JobController extends Controller
         //
     }
 
-    public function suggestJob() #$id
+    public function suggestJob($id = 1) #$id
     {
-        #$user=User::class->find($id)->subjects();
-        $subScore = "10 10 40 10 10 10 10 10";
+         $user = User::find($id);
+         //$subScore = "10 10 40 10 10 10 10 10";
+         $subScore = "";
 
-        $result = new Process("python C:\PythonPrograms\jobSuggestion.py". " $subScore");
+         $subs = Subject::all();
+         foreach ($subs as $sub) {
+             $subScore .= $user->subjectScore($sub).' ';
+         }
+        \Debugbar::addMessage($subScore);
+
+        $result = new Process("python ".base_path('PythonPrograms')."\jobSuggestion.py $subScore");
         $result->run();
 
         if (!$result->isSuccessful()) {
@@ -34,9 +41,7 @@ class JobController extends Controller
         }
         $result= json_decode($result->getOutput(), true);
 
-    return view("tester")->with(compact('result'));
-
-
+        return view("tester")->with(compact('result'));
     }
 
     /**

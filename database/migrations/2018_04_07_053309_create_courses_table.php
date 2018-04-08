@@ -18,7 +18,6 @@ class CreateCoursesTable extends Migration
             $table->unsignedInteger('subject_id');
             $table->text('name');
             $table->text('description');
-            $table->unsignedInteger('credits');
             $table->timestamps();
         });
 

@@ -7,6 +7,5 @@
             'subject_id'  => random_int(1, App\Subject::count()),
             'name'        => $faker->jobTitle,
             'description' => $faker->paragraph,
-            'credits'     => random_int(1, 40),
         ];
     });
