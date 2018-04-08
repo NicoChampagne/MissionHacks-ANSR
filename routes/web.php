@@ -27,3 +27,4 @@ Route::get('/exams/store','ExamsController@/store' );
 Auth::routes();
 
 Route::get('/profile/{id}', 'HomeController@index')->name('home');
+Route::get('/profile/{id}/{subjectid}', 'HomeController@subject');

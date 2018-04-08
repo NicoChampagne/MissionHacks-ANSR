@@ -32,10 +32,7 @@
                         var chartData = activePoints[0]['_chart'].config.data;
                         var idx = activePoints[0]['_index'];
 
-                        var label = chartData.labels[idx];
-                        var value = chartData.datasets[0].data[idx];
-
-                        var url = window.location.href + "&value=" + value;
+                        var url = window.location.href + "/" + (idx+1);
                         window.location.replace(url);
                         history.pushState('graph click', url);
                     }

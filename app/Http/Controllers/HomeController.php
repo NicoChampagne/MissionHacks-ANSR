@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
 use App\User;
 use App\Job;
 use App\Subject;
@@ -46,16 +47,16 @@ class HomeController extends Controller
         }
         //\Debugbar::addMessage($subScore);
 
-        $result = new Process("python ".base_path('PythonPrograms')."\jobSuggestion.py $subScore");
-        $result->run();
+//        $result = new Process("python ".base_path('PythonPrograms')."\jobSuggestion.py $subScore");
+//        $result->run();
+//
+//        if (!$result->isSuccessful()) {
+//            throw new ProcessFailedException($result);
+//        }
+//        $result= json_decode($result->getOutput(), true);
 
-        if (!$result->isSuccessful()) {
-            throw new ProcessFailedException($result);
-        }
-        $result= json_decode($result->getOutput(), true);
 
-
-        // create collection with id: name for user profiles
+        // create collection with id and name for user profiles
         $userOptions = "[";
         foreach($allUsers as $user) {
             $userOptions = $userOptions . "{ value: \"". $user->id ."\", text: \"". $user->name . "\"},";
@@ -74,7 +75,34 @@ class HomeController extends Controller
             'credits' => $creditsArray,
             'subjects'=> $subjectArray,
             'userOptions'=> $userOptions,
-            'result' => $result,
+//            'result' => $result,
         ]);
+    }
+
+    public function subject($profileId, $subjectId)
+    {
+        $profile = User::findOrFail($profileId);
+
+        $allUsers = User::all();
+        $userOptions = "[";
+
+        foreach($allUsers as $user) {
+            $userOptions = $userOptions . "{ value: \"". $user->id ."\", text: \"". $user->name . "\"},";
+        }
+        $userOptions = $userOptions . "]";
+
+        // get all courses completed from the current user, related to the specified
+        $subject = Subject::findOrFail($subjectId);
+        $courses = $profile->courses->where('subject_id', $subjectId);
+        $completedRatio = ($courses->count()/40)*100;
+
+        return view('subjects', [
+            'userOptions'=> $userOptions,
+            'profile'=> $profile,
+            'courses'=> $courses,
+            'subject'=>$subject,
+            'percentageCompleted'=>$completedRatio
+        ]);
+
     }
 }
