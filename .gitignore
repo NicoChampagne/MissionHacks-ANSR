@@ -18,6 +18,8 @@ yarn-error.log
 .DS_Store
 public/.DS_Store
 public/js/.DS_Store
+public/js/app.js
+public/css/app.css
 resources/.DS_Store
 resources/assets/.DS_Store
 resources/assets/js/.DS_Store
