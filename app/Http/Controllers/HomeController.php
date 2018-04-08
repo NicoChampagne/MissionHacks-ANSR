@@ -36,7 +36,8 @@ class HomeController extends Controller
 
         foreach($allSubjects as $index => $subject) {
             $subjectArray->push($subject->name);
-            $creditsArray->push(3);
+            $score = $profile->subjectScore($subject);
+            $creditsArray->push($score);
         }
 
         return view('home', [
