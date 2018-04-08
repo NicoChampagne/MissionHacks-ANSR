@@ -9,7 +9,6 @@ use App\Subject;
 use Illuminate\Support\Collection;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
-use function Sodium\add;
 
 class HomeController extends Controller
 {
@@ -23,12 +22,18 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
+    public function index() {
+        if (\Auth::check()) {
+            redirect('/profile/'.\Auth::id());
+        }
+        return redirect()->back();
+    }
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($profileId)
+    public function show($profileId)
     {
         $profile = User::findOrFail($profileId);
         $allSubjects = Subject::all();

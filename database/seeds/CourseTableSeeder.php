@@ -11,10 +11,13 @@ class CourseTableSeeder extends Seeder
      */
     public function run()
     {
-        //factory(App\Course::class, 5)->create();
 
         App\Subject::all()->each(function($s){
-            $s->courses()->saveMany(factory(\App\Course::class, 50)->create(['subject_id' => $s->id]));
+            for($i = 1; $i <= 40; $i++) {
+                $s->courses()->save(
+                    factory(\App\Course::class)->create(['subject_id' => $s->id , 'name' => "$s->name $i"])
+                );
+            }
         });
 
     }
