@@ -19,6 +19,7 @@ class JobController extends Controller
     public function index()
     {
         $allJobs = array();
+
         $allUsers = User::all();
         $subs = Subject::all();
 
@@ -44,7 +45,19 @@ class JobController extends Controller
             }
             arsort($allJobs);
         }
-            return view("jobs",['allJobs'=>$allJobs]);
+
+           // return view("jobs",['allJobs'=>$allJobs]);
+
+            $jobs = array_keys($allJobs);
+            $showMany = array_values($allJobs);
+
+            $jsonJobs = json_encode($jobs);
+            $jsonShowMany = json_encode($showMany);
+
+            return view('jobs', [
+                'jobs' => $jsonJobs,
+                'showMany' => $jsonShowMany,
+            ]);
 
     }
 

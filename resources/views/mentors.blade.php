@@ -47,14 +47,20 @@
                     <h5 class="modal-title">Name of Mentor</h5>
                 </div>
                 <div class="modal-body">
-                    <h3>Understdability</h3>
-                    <p>5/5</p>
+                    <h3 style="padding-top: 15px;">Understandibility</h3>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80</div>
+                    </div>
 
-                    <h3>Understdability</h3>
-                    <p>5/5</p>
+                    <h3 style="padding-top: 15px;">Likeability</h3>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75</div>
+                    </div>
 
-                    <h3>Understdability</h3>
-                    <p>5/5</p>
+                    <h3 style="padding-top: 15px;">Enthusiasm</h3>
+                    <div class="progress">
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100">35</div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

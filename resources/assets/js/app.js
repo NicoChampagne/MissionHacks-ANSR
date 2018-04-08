@@ -19,6 +19,7 @@ Vue.component('polar-area', require('./components/PolarArea.vue'));
 Vue.component('quick-menu', require('./components/QuickMenu.vue'));
 Vue.component('datepicker', require('vuejs-datepicker'));
 Vue.component('search-input', require('./components/SearchInput.vue'));
+Vue.component('bar-chart', require('./components/BarChart.vue'));
 
 const app = new Vue({
     el: '#app'

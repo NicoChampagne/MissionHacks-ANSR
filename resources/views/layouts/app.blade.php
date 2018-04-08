@@ -63,7 +63,7 @@
 
 
         @if (Auth::check())
-        <quick-menu :icon-class='["fa fa-users", "fa fa-graduation-cap","fa fa-book","fa fa-sign-out-alt"]'
+        <quick-menu style="z-index: 10;" :icon-class='["fa fa-users", "fa fa-graduation-cap","fa fa-book","fa fa-sign-out-alt"]'
                     :menu-url-list='["/profile/"+{{Auth::getUser()->id}},"/exams","/mentors"]'>
         </quick-menu>
         @endif
