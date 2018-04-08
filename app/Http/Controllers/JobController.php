@@ -36,7 +36,7 @@ class JobController extends Controller
                 throw new ProcessFailedException($result);
             }
             $result = json_decode($result->getOutput(), true);
-           
+
             if (array_key_exists($result, $allJobs)) {
                 ++$allJobs[$result];
             } else {
