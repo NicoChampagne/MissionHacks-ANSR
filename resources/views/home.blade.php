@@ -31,4 +31,5 @@
             Suggested Job: {{$result}}
         </div>
     </div>
+
 @endsection
