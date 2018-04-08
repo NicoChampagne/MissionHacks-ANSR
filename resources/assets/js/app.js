@@ -17,6 +17,7 @@ window.Vue = require('vue');
 
 Vue.component('polar-area', require('./components/PolarArea.vue'));
 Vue.component('quick-menu', require('./components/QuickMenu.vue'));
+Vue.component('search-input', require('./components/SearchInput.vue'));
 
 const app = new Vue({
     el: '#app'

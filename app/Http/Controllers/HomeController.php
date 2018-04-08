@@ -33,7 +33,14 @@ class HomeController extends Controller
 
         $allUsers = User::all();
 
+        // create collection with id: name for user profiles
+        $userOptions = "[";
+        foreach($allUsers as $user) {
+            $userOptions = $userOptions . "{ value: \"". $user->id ."\", text: \"". $user->name . "\"},";
+        }
+        $userOptions = $userOptions . "]";
 
+        // get course credits per profile
         foreach($allSubjects as $index => $subject) {
             $subjectArray->push($subject->name);
             $score = $profile->subjectScore($subject);
@@ -44,7 +51,7 @@ class HomeController extends Controller
             'profile' => $profile,
             'credits' => $creditsArray,
             'subjects'=> $subjectArray,
-            'allusers'=> $allUsers
+            'userOptions'=> $userOptions
         ]);
     }
 }
