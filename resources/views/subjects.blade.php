@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container">
+    <div v-cloak class="container text-center ">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <search-input :useroptions='{{$userOptions}}'></search-input>
