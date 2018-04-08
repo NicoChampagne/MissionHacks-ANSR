@@ -102,7 +102,7 @@ Mathematics,Sciences,Languages,Arts,Physical Education,Social Studies,History,Pr
 10,15,22,7,6,26,13,8,Psychologist
 10,12,23,8,6,25,12,7,Therapist
 8,8,21,7,6,18,7,10,Receptionist
-8,8,25,6,8,26,15,9,Social Worker
+8,8,25,6,7,26,15,9,Social Worker
 12,12,22,6,7,16,10,15,Nurse
 16,16,12,7,15,10,10,16,Veterenarian
 15,25,15,8,9,11,9,18,Biologist
@@ -110,3 +110,143 @@ Mathematics,Sciences,Languages,Arts,Physical Education,Social Studies,History,Pr
 8,8,18,10,8,16,15,12,Politician
 8,8,6,8,35,8,6,31,Construction Worker
 18,11,13,10,8,12,8,12,Computer Programmer
+7,6,9,7,7,7,6,9,Manucurist
+18,22,10,7,7,7,6,14,Agricultural Engineer
+9,12,9,8,9,8,12,16,Arborist
+7,6,27,22,6,10,12,6,Author
+12,6,9,6,15,7,8,11,Surveyor
+7,6,7,7,12,7,7,15,Butcher
+7,7,8,8,12,8,15,16,Chef
+12,12,8,8,20,7,8,11,Chiropractor
+6,6,15,26,9,9,15,6,Actor
+8,6,12,10,8,14,6,11,Customer Service
+15,7,8,9,7,15,12,12,Economist
+7,6,12,30,7,15,15,12,Filmmaker
+9,8,7,7,9,6,6,37,Mechanic
+32,12,10,7,7,10,7,6,Actuary
+12,12,15,6,13,11,9,18,Pilot
+6,7,12,8,8,20,10,12,Bus Driver
+12,16,10,15,7,12,15,15,Architect
+11,8,16,8,8,12,10,12,Analyst
+15,30,10,7,8,7,8,12,Chemist
+12,15,12,6,7,11,10,12,Dentist
+9,12,7,8,23,15,8,10,Nutritionist
+14,18,8,6,9,8,9,25,Electrician
+8,7,9,8,32,12,8,12,Fireman
+6,6,6,15,7,15,7,15,Fashion Designer
+8,12,32,6,7,24,20,6,Judge
+8,9,12,26,10,20,8,13,Graphic Designer
+7,8,25,8,10,18,21,6,Lawyer
+6,7,8,7,8,8,8,15,Janitor
+15,15,14,7,7,9,10,15,Pharmacist
+10,15,19,7,6,34,13,6,Psychologist
+10,12,23,8,6,18,12,7,Therapist
+8,8,14,7,6,15,7,8,Receptionist
+8,8,26,6,8,23,15,9,Social Worker
+12,12,22,6,7,17,10,15,Nurse
+16,16,12,7,15,10,10,16,Veterenarian
+15,25,15,8,9,12,9,18,Biologist
+8,8,6,7,25,12,6,40,Farmer
+8,8,18,10,8,16,15,12,Politician
+8,6,7,8,27,8,6,28,Construction Worker
+14,10,13,10,8,13,8,12,Computer Programmer
+23,12,13,5,13,9,5,7,Computer Programmer
+20,25,10,6,9,10,4,12,Doctor
+23,25,8,6,7,6,6,27,Engineer
+9,6,15,22,10,10,15,5,Artist
+11,10,12,6,25,12,6,12,Trainer
+7,6,10,10,35,6,6,10,Athlete
+6,7,20,20,7,20,20,6,Teacher
+6,8,25,16,8,20,15,4,Journalist
+7,6,10,6,22,21,7,12,Policeman
+8,8,7,6,12,15,9,8,Security
+31,12,10,6,7,10,7,6,Actuary
+10,12,15,6,13,11,5,15,Pilot
+7,8,12,8,8,20,10,9,Bus Driver
+11,15,10,15,7,12,15,12,Architect
+11,10,12,8,8,12,10,12,Analyst
+16,30,10,7,8,7,8,12,Chemist
+13,15,12,6,7,12,10,12,Dentist
+10,12,7,8,25,15,8,7,Nutritionist
+14,20,8,6,9,8,9,20,Electrician
+9,8,12,8,26,12,8,12,Fireman
+7,6,6,15,10,16,15,15,Fashion Designer
+5,12,26,6,7,25,20,6,Judge
+9,9,12,32,10,22,8,12,Graphic Designer
+8,8,22,8,10,18,20,6,Lawyer
+7,6,20,15,13,12,12,15,Janitor
+14,20,12,7,7,10,11,12,Pharmacist
+9,15,22,7,7,26,13,8,Psychologist
+9,12,23,8,6,20,12,7,Therapist
+7,8,21,7,6,18,7,10,Receptionist
+7,8,25,6,8,22,15,9,Social Worker
+13,12,22,6,7,16,10,15,Nurse
+17,16,12,7,15,10,10,16,Veterenarian
+16,25,15,8,9,11,9,18,Biologist
+7,8,6,7,25,13,6,40,Farmer
+7,8,18,10,8,16,15,12,Politician
+9,8,6,8,35,9,6,31,Construction Worker
+19,11,13,10,8,12,8,12,Computer Programmer
+6,6,9,7,7,6,6,9,Manucurist
+16,22,10,7,7,7,6,14,Agricultural Engineer
+9,12,10,8,9,9,12,16,Arborist
+7,6,27,22,7,10,12,6,Author
+12,6,10,6,16,7,8,11,Surveyor
+7,6,7,7,14,7,7,15,Butcher
+7,7,9,8,11,8,15,16,Chef
+12,12,8,8,21,7,8,11,Chiropractor
+6,6,16,26,11,9,15,6,Actor
+8,6,12,10,9,14,6,11,Customer Service
+15,7,9,9,7,15,12,12,Economist
+7,6,13,30,8,15,15,12,Filmmaker
+9,8,8,7,10,6,6,37,Mechanic
+15,11,9,5,14,9,7,12,Computer Programmer
+15,27,10,7,9,10,7,11,Doctor
+21,29,9,7,6,6,8,22,Engineer
+6,7,15,35,10,9,13,13,Artist
+9,10,11,6,30,12,7,11,Trainer
+7,6,12,9,32,6,6,10,Athlete
+6,7,20,20,7,20,20,6,Teacher
+6,8,25,16,8,20,15,4,Journalist
+7,6,10,6,22,21,7,12,Policeman
+8,8,7,6,12,15,9,8,Security
+31,12,10,6,7,10,7,6,Actuary
+10,12,15,6,13,11,5,15,Pilot
+7,8,12,8,8,20,10,9,Bus Driver
+11,15,10,15,7,12,15,12,Architect
+11,10,12,8,8,12,10,12,Analyst
+16,30,10,7,8,7,8,12,Chemist
+13,15,12,6,7,12,10,12,Dentist
+10,12,7,8,25,15,8,7,Nutritionist
+14,20,8,6,9,8,9,20,Electrician
+9,8,12,8,26,12,8,12,Fireman
+7,6,6,15,10,16,15,15,Fashion Designer
+5,12,26,6,7,25,20,6,Judge
+9,9,12,32,10,22,8,12,Graphic Designer
+8,8,22,8,10,18,20,6,Lawyer
+7,6,20,15,13,12,12,15,Janitor
+14,20,12,7,7,10,11,12,Pharmacist
+9,15,22,7,7,26,13,8,Psychologist
+9,12,23,8,6,20,12,7,Therapist
+7,8,21,7,6,18,7,10,Receptionist
+7,9,24,6,8,24,15,9,Social Worker
+13,11,22,7,7,15,10,15,Nurse
+18,16,12,8,15,11,10,16,Veterenarian
+12,27,15,9,7,11,8,15,Biologist
+7,7,6,7,25,13,6,40,Farmer
+7,8,18,10,8,17,15,12,Politician
+9,9,6,8,35,9,6,31,Construction Worker
+19,11,13,10,8,12,8,12,Computer Programmer
+6,6,9,7,7,6,6,9,Manucurist
+16,22,8,7,7,7,6,14,Agricultural Engineer
+9,12,10,8,9,9,12,16,Arborist
+7,6,27,22,7,10,12,6,Author
+12,7,10,6,16,7,8,11,Surveyor
+7,6,7,7,14,7,7,15,Butcher
+7,8,9,8,11,8,15,16,Chef
+12,12,8,9,21,7,8,12,Chiropractor
+6,6,16,26,12,9,15,7,Actor
+8,6,12,10,9,14,6,11,Customer Service
+15,6,9,9,7,15,13,13,Economist
+7,7,13,30,9,15,15,12,Filmmaker
+9,8,8,7,10,6,6,37,Mechanic
