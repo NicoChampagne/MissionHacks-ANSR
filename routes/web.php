@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/mentors','MentorController@index' , function () {
+Route::get('/mentors', function () {
     return view('mentors');
 });
 

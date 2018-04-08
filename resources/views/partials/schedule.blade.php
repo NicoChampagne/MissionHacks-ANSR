@@ -4,9 +4,11 @@
 
         @foreach($exams as $exam)
 
-        <div class="panel panel-info">
-            <div class="panel-heading">{{$exam->course->name}} </div>
-            <div class="panel-body">{{$exam->date()->diffForHumans()}} </div>
-        </div>
+            <div class="card border-info mb-3">
+                <div class="card-header">{{$exam->subject->name}}</div>
+                <div class="card-body text-info">
+                    <h5 class="card-title">{{$exam->date()->diffForHumans()}}</h5>
+                </div>
+            </div>
         @endforeach
     </div>

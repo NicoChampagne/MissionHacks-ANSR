@@ -14,6 +14,7 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"
             integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
     <!-- Fonts -->
@@ -59,6 +60,13 @@
                 </div>
             </div>
         </nav>
+
+
+        @if (Auth::check())
+        <quick-menu :icon-class='["fa fa-users", "fa fa-graduation-cap","fa fa-book","fa fa-sign-out-alt"]'
+                    :menu-url-list='["/profile/"+{{Auth::getUser()->id}},"/exams","/mentors"]'>
+        </quick-menu>
+        @endif
 
         <main class="py-4">
             @yield('content')
