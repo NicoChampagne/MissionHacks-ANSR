@@ -54,11 +54,24 @@ class JobController extends Controller
             $jsonJobs = json_encode($jobs);
             $jsonShowMany = json_encode($showMany);
 
-            return view('jobs', [
-                'jobs' => $jsonJobs,
-                'showMany' => $jsonShowMany,
-            ]);
 
+            $jobsString = '[';
+            foreach (array_keys($allJobs) as $job) {
+                $jobsString .= '"'.$job.'", ';
+            }
+            $jobsString .= ']';
+
+            $countsString= '[';
+            foreach (array_values($allJobs) as $job) {
+                $countsString .= '"'.$job.'", ';
+            }
+            $countsString .= ']';
+
+            return view('jobs', [
+                'jobsString' => $jobsString,
+                'countsString' => $countsString,
+                'jobs' => $jsonJobs,
+                'showMany' => $jsonShowMany,]);
     }
 
 
