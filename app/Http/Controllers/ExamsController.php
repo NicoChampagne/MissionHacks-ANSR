@@ -63,7 +63,7 @@ class ExamsController extends Controller
         if(!\Auth::check()) {
             return redirect()->back();
         }
-        $subject = \App\Subject::findOrFail(request('subject'))->first();
+        $subject = \App\Subject::findOrFail(request('subject'));
         $user = \Auth::user();
 
         $lvl = $user->subjectScore($subject) + 1;

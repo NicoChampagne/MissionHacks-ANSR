@@ -23,12 +23,12 @@ class AdminController extends Controller
 
         $exam = Exam::findOrFail(request('examid'));
         //$subj = $exam->subject;
-        //$user = $exam->user;
-        if(strcmp(request('passing'), ('passed')) === 0)
+        $user = $exam->user;
+        if(strcmp(request('passing'), ('passed')) === 0 && !$user->hasCompleted($exam->course))
         {
             //$lvl = $user->subjectScore($subj) + 1;
             //$course = Course::whereName("$subj->name $lvl")->get();
-            $exam->user->courses()->attach($exam->course_id);
+            $user->courses()->attach($exam->course_id);
         }
 
         $exam->delete();

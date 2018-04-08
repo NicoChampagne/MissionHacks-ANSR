@@ -33,7 +33,7 @@
         </button>
 
 
-    <!-- Your Prediction Modal -->t
+    <!-- Your Prediction Modal -->
         <div class="modal fade" id="predictModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
