@@ -34,3 +34,5 @@ Route::get('/profile/{id}', 'HomeController@index')->name('home');
 Route::get('/profile/{id}/{subjectid}', 'HomeController@subject');
 Route::get('/admin','AdminController@index');
 Route::post('/admin/store','AdminController@store')->name('passOrFail');
+
+Route::get('/jobs','JobController@index');
