@@ -40,7 +40,7 @@
                         <h5 class="modal-title" id="exampleModalLabel">Job Prediction</h5>
                     </div>
                     <div class="modal-body">
-                        {{--Based on your academic achievememnts and preferences, we have determined you are likely to become a(n) <span style="color:darkolivegreen;font-weight:bold; font-size:17px;">{{$result}}</span>. With more information the prediction becomes more accurate.--}}
+                        Based on your academic achievememnts and preferences, we have determined you are likely to become a(n) <span style="color:darkolivegreen;font-weight:bold; font-size:17px;">{{$result}}</span>. With more information the prediction becomes more accurate.
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -57,7 +57,7 @@
                         <h5 class="modal-title" id="exampleModalLabel">Job Prediction</h5>
                     </div>
                     <div class="modal-body">
-                        {{--Based on your academic achievememnts and preferences, we have determined you are likely to become a(n) <span style="color:darkolivegreen;font-weight:bold; font-size:17px;">{{$result}}</span>. With more information the prediction becomes more accurate.--}}
+                        Based on your academic achievememnts and preferences, we have determined you are likely to become a(n) <span style="color:darkolivegreen;font-weight:bold; font-size:17px;">{{$result}}</span>. With more information the prediction becomes more accurate.
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
