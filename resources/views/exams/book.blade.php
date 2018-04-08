@@ -36,22 +36,25 @@
     <hr />
 
     <div class = "container">
-        <h3 style="padding-bottom: 20px;">Your Scheduled exams</h3>
 
-        <div class="panel panel-info">
-            <div class="panel-heading">Mathematics 1 (test) </div>
-            <div class="panel-body">January 5 2019 (test)</div>
-        </div>
+        @include('scheduled')
 
-        <div class="panel panel-info">
-            <div class="panel-heading">Mathematics 1 (test) </div>
-            <div class="panel-body">January 5 2019 (test)</div>
-        </div>
+        {{--<h3 style="padding-bottom: 20px;">Your Scheduled exams</h3>--}}
 
-        <div class="panel panel-info">
-            <div class="panel-heading">Mathematics 1 (test) </div>
-            <div class="panel-body">January 5 2019 (test)</div>
-        </div>
+        {{--<div class="panel panel-info">--}}
+            {{--<div class="panel-heading">Mathematics 1 (test) </div>--}}
+            {{--<div class="panel-body">January 5 2019 (test)</div>--}}
+        {{--</div>--}}
+
+        {{--<div class="panel panel-info">--}}
+            {{--<div class="panel-heading">Mathematics 1 (test) </div>--}}
+            {{--<div class="panel-body">January 5 2019 (test)</div>--}}
+        {{--</div>--}}
+
+        {{--<div class="panel panel-info">--}}
+            {{--<div class="panel-heading">Mathematics 1 (test) </div>--}}
+            {{--<div class="panel-body">January 5 2019 (test)</div>--}}
+        {{--</div>--}}
     </div>
 
 
