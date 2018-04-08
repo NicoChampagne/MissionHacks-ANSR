@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="fluid-container">
+    <div v-cloak class="fluid-container text-center">
         <div class="jumbotron">
             <div class="text-center">
                 <div>
